@@ -8,6 +8,9 @@ jobs:
       steps:
         - name: checkout
           uses: actions/checkout@v4
+
+        - name: setup node js in VM
+          uses: actions/setup-node@v4
           with:
             node-version: 24
             cache: npm
@@ -17,3 +20,10 @@ jobs:
 
         - name: make react build
           run: npm run build
+
+        - name: create artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: react-build
+            path: dis/
+            retention-days: 7
