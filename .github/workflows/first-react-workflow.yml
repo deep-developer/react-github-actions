@@ -19,8 +19,7 @@ jobs:
           run: npm ci
 
         - name: run ESLint in app 
-	        run: npm run lint
-
+          run: npm run lint
     test-job:
       runs-on: ubuntu-latest
       steps:
@@ -37,8 +36,7 @@ jobs:
           run: npm ci
 
         - name: run test cases
-		      run: npm run test
-
+          run: npm run test
     build-job:
       runs-on: ubuntu-latest
       steps:
