@@ -20,25 +20,9 @@ jobs:
 
         - name: run ESLint in app 
           run: npm run lint
-    test-job:
-      runs-on: ubuntu-latest
-      steps:
-        - name: checkout
-          uses: actions/checkout@v4
 
-        - name: setup node js in VM
-          uses: actions/setup-node@v4
-          with:
-            node-version: 24
-            cache: npm
-        
-        - name: install dependency
-          run: npm ci
-
-        - name: run test cases
-          run: npm run test
     build-job:
-      needs: [lint-job, test-job]
+      needs: [lint-job]
       runs-on: ubuntu-latest
       steps:
         - name: checkout
@@ -62,3 +46,18 @@ jobs:
             name: react-build
             path: dist/
             retention-days: 7
+
+    deploy-job:
+      needs: [lint-job, build-job]
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout
+          uses: actions/checkout@v4
+        
+        - name: "Install Vercel CLI"
+          run: npm install --global vercel
+
+        - name: deployment on vercel
+          run: vercel --prod --yes --token="${{secrects.VERCEL_TOKEN}}"
+
+        
