@@ -1,0 +1,22 @@
+name: 'second react workflow'
+on:
+  push:
+  pull_request:
+jobs:
+    lint-jobs:
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout
+          uses: actions/checkout@v4
+
+        - name: setup node js in vm
+          uses: actions/setup-node@v4
+          with:
+            node-version: 24
+            cache: npm
+
+        - name: Install dependency
+          run: npm ci
+
+        - name: install ESLint in app
+          run: npm run lint
